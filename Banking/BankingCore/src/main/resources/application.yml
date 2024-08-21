@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: banking-core
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: hdbank
+    password: hdbank
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

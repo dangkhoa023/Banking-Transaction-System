@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface QueryService {
-    Transaction findById(Long id);
+public interface QueryService<T> {
+    T findById(Long id);
 
-    Page<Transaction> findAll(Pageable pageable);
+    Page<T> findAll(Pageable pageable);
 
-    List<Transaction> findAll();
+    List<T> findAll();
 }
