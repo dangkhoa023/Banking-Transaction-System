@@ -6,7 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="User" />
         <module name="BankingCore" />
         <module name="BankingEventHandler" />
         <module name="BankingCommon" />
@@ -15,6 +14,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="BankingCommand" target="21" />
+      <module name="User" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
