@@ -1,10 +1,10 @@
-package com.hdbank.user;
+package com.hdbank.banking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserApplicationTests {
+class BankingApplicationTests {
 
 	@Test
 	void contextLoads() {
