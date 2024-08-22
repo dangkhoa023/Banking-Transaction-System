@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -21,6 +22,7 @@ public abstract class Event {
     @GeneratedValue
     private Long eventId;
 
+    @Enumerated(EnumType.STRING)
     private EventType eventType;
 
     @JdbcTypeCode(SqlTypes.JSON)
