@@ -15,9 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService{
-    private final AccountCommandService commandService;
-//    private final ClientQueryService queryService;
 
+    private final AccountCommandService commandService;
     private final AccountMapper mapper;
 
 
