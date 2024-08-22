@@ -10,6 +10,7 @@ import lombok.SneakyThrows;
 @RequiredArgsConstructor
 public class ObjectConverter implements AttributeConverter<Object, String> {
 
+    // Lớp này dùng để chuyển từ Object sang String(Json) và ngược lại
     private final ObjectMapper objectMapper;
 
     @Override
@@ -26,6 +27,5 @@ public class ObjectConverter implements AttributeConverter<Object, String> {
     ) {
         return objectMapper.convertValue(json, Object.class);
     }
-
 }
 

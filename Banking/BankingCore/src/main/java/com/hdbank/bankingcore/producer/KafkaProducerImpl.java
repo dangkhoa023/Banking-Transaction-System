@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class KafkaProducerImpl implements KafkaProducer {
 
+    // Gửi topic nào thì sẽ gửi event đó
     private final KafkaTemplate<String, Event> kafkaTemplate;
 
     @Value("${kafka.topic.name}")

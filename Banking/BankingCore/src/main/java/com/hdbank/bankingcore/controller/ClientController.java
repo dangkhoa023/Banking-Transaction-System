@@ -1,8 +1,9 @@
 package com.hdbank.bankingcore.controller;
 
-import com.hdbank.bankingcommon.domain.model.Client;
+import com.hdbank.bankingcore.domain.dto.ClientRequest;
 import com.hdbank.bankingcore.service.client.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +14,10 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    @GetMapping
-    public ResponseEntity<String> getClients() {
-        return ResponseEntity.ok("Hello");
-    }
-
     @PostMapping
-    public ResponseEntity<?> createClient(@RequestBody Client client) {
-        clientService.save(client);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> createClient(@RequestBody ClientRequest newClient) {
+        clientService.createClient(newClient);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .build();
     }
 }

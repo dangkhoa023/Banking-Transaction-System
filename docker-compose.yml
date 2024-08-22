@@ -1,26 +1,62 @@
 services:
-  banking_db:
-    image: postgres
-    environment:
-      POSTGRES_DB: banking
-      POSTGRES_USER: hdbank
-      POSTGRES_PASSWORD: hdbank
-    ports:
-      - "5432:5432"
-
   zookeeper:
-    image: confluentinc/cp-zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+    container_name: zookeeper
+    image: quay.io/debezium/zookeeper:1.7.2.Final
+    networks:
+      - ui-network
+    ports:
+      - "2181:2181"
   kafka:
-    image: confluentinc/cp-kafka
+    container_name: kafka
+    image: quay.io/debezium/kafka:1.7.2.Final
     ports:
       - "9092:9092"
+    depends_on:
+      - zookeeper
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+    networks:
+      - ui-network
+  db-pg:
+    container_name: db-pg
+    image: quay.io/debezium/example-postgres:1.7.2.Final
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - ui-network
+  connect:
+    container_name: connect
+    image: quay.io/debezium/connect:nightly
+    ports:
+      - "8083:8083"
+    depends_on:
+      - kafka
+      - db-pg
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+      - ENABLE_DEBEZIUM_KC_REST_EXTENSION=true
+      - ENABLE_DEBEZIUM_SCRIPTING=true
+#      - CONNECT_REST_EXTENSION_CLASSES=io.debezium.kcrestextension.DebeziumConnectRestExtension
+    networks:
+      - ui-network
+  debezium-ui:
+    container_name: debezium-ui
+    image: quay.io/debezium/debezium-ui:1.7.2.Final
+    ports:
+      - "8080:8080"
+    environment:
+      - KAFKA_CONNECT_URIS=http://connect:8083
+    depends_on:
+      - connect
+    networks:
+      - ui-network
+networks:
+  ui-network:
+    external: false

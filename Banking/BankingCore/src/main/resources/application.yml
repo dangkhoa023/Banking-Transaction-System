@@ -2,12 +2,12 @@ spring:
   application:
     name: banking-core
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: hdbank
-    password: hdbank
+    url: jdbc:postgresql://localhost:5431/postgres
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
 kafka:
   topic:

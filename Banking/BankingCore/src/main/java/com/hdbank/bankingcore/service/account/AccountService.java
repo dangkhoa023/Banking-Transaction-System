@@ -1,8 +1,10 @@
 package com.hdbank.bankingcore.service.account;
 
-import com.hdbank.bankingcommon.service.AccountQueryService;
+import com.hdbank.bankingcommon.domain.model.Account;
+import com.hdbank.bankingcommon.service.QueryService;
+import com.hdbank.bankingcommon.service.account.AccountQueryService;
+import com.hdbank.bankingcore.service.CommandService;
 import org.springframework.stereotype.Service;
 
-@Service
-public interface AccountService extends AccountCommandService, AccountQueryService {
+public interface AccountService extends QueryService<Account>, CommandService<Account> {
 }

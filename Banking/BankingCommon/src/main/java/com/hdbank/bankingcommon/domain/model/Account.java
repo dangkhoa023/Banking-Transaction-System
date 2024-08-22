@@ -5,10 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
@@ -21,11 +17,7 @@ public class Account {
     @GeneratedValue
     private Long accountId;
 
-    private Long userId;
+    private Long clientId;
 
     private Long balance;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
 }

@@ -1,23 +1,24 @@
 package com.hdbank.bankingcommon.event;
 import com.hdbank.bankingcommon.domain.converter.ObjectConverter;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "events")
 public abstract class Event {
     @Id
     @GeneratedValue
-    private Long eventId;
+    private UUID eventId;
 
     private EventType eventType;
 
@@ -25,7 +26,10 @@ public abstract class Event {
     @Convert(converter = ObjectConverter.class)
     private Object payload;
 
+    private LocalDateTime timestamp;
+
     public Event(EventType eventType, Object payload) {
+        eventId = UUID.randomUUID();
         this.eventType = eventType;
         this.payload = payload;
     }

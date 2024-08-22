@@ -10,6 +10,4 @@ public interface QueryService<T> {
     T findById(Long id);
 
     Page<T> findAll(Pageable pageable);
-
-    List<T> findAll();
 }
