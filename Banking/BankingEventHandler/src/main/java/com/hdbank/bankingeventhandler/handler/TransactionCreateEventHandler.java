@@ -17,7 +17,7 @@ public class TransactionCreateEventHandler implements EventHandler{
     private final TransactionService transactionService;
 
     @Override
-    public void process(JsonObject json) {
+    public void handle(JsonObject json) {
         TransactionCreateEvent event = gson.fromJson(
                 json,
                 TransactionCreateEvent.class

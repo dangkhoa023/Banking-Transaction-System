@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 import java.util.TimeZone;
 
 @Component
-public class LocalDateTimeDeserializer
-        implements JsonDeserializer<LocalDateTime> {
+public class LocalDateTimeDeserializer implements JsonDeserializer<LocalDateTime> {
 
     @Override
     public LocalDateTime deserialize(
