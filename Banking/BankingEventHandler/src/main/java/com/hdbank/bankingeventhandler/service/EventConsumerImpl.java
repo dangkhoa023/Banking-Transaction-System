@@ -21,22 +21,22 @@ public class EventConsumerImpl implements EventConsumer {
     @Override
     @KafkaListener(topics = "banking")
     public void process(String payload) {
-        log.info("Received message: {}", payload);
         // Xử lý sự kiện ở đây
 
-//        try {
-//            log.info("Received message: {}", payload);
-//            JsonObject json = JsonParser.parseString(payload)
-//                    .getAsJsonObject();
-//            String type = json.get("type")
-//                    .getAsString();
-//            factories.get(type)
-//                    .handle(
-//                            json
-//                    );
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            log.info("Received message: {}", payload);
+            JsonObject json = JsonParser.parseString(payload)
+                    .getAsJsonObject();
+            String type = json.get("eventType")
+                    .getAsString();
+            log.info("Type: {}", type);
+            factories.get(type)
+                    .handle(
+                            json
+                    );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

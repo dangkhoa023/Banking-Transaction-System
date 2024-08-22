@@ -1,8 +1,6 @@
 package com.hdbank.bankingeventhandler.config;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
+import com.google.gson.*;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
@@ -19,9 +17,14 @@ public class LocalDateTimeDeserializer implements JsonDeserializer<LocalDateTime
             final Type typeOfT,
             final JsonDeserializationContext context
     ) {
+        JsonArray jsonArray = json.getAsJsonArray();
+        if (jsonArray.isEmpty()) {
+            throw new JsonParseException("JsonArray must not be empty");
+        }
+        long timestamp = jsonArray.get(0).getAsLong();
         return LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(
-                        json.getAsLong() / 1000
+                        timestamp / 1000
                 ),
                 TimeZone.getDefault()
                         .toZoneId()
