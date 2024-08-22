@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 public abstract class Event {
     @Id
     @GeneratedValue
-    private UUID eventId;
+    private Long eventId;
 
     private EventType eventType;
 
@@ -26,10 +27,10 @@ public abstract class Event {
     @Convert(converter = ObjectConverter.class)
     private Object payload;
 
+    @CreationTimestamp
     private LocalDateTime timestamp;
 
     public Event(EventType eventType, Object payload) {
-        eventId = UUID.randomUUID();
         this.eventType = eventType;
         this.payload = payload;
     }
