@@ -1,5 +1,6 @@
 package com.hdbank.bankingcore.service.event;
 
+import com.hdbank.bankingcommon.domain.model.Transaction;
 import com.hdbank.bankingcommon.event.Event;
 import com.hdbank.bankingcore.producer.KafkaProducer;
 import com.hdbank.bankingcore.repository.EventRepository;
@@ -18,4 +19,12 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(event);
         kafkaProducer.send(event);
     }
+
+    @Override
+    public void transferMoneyEvent(Transaction transfer) {
+
+
+    }
+
+
 }

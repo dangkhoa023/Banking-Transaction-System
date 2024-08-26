@@ -10,4 +10,6 @@ import org.springframework.stereotype.Service;
 
 public interface AccountService extends QueryService<Account>, CommandService<Account> {
     void createAccount(AccountRequest newAccount);
+
+    Account getById(long accountId);
 }

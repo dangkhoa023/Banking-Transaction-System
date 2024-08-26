@@ -11,6 +11,8 @@ public class TransactionMapper {
         return Transaction.builder()
                 .amount(request.amount())
                 .description(request.description())
+                .fromAccountId(request.fromAccountId())
+                .toAccountId(request.fromAccountId())
                 .build();
     }
 }

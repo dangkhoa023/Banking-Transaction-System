@@ -5,4 +5,5 @@ import com.hdbank.bankingcore.service.CommandService;
 import org.springframework.stereotype.Service;
 
 public interface AccountCommandService extends CommandService<Account> {
+
 }

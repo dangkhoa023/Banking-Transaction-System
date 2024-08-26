@@ -1,12 +1,9 @@
 package com.hdbank.bankingcore.service.account;
 
 import com.hdbank.bankingcommon.domain.model.Account;
-import com.hdbank.bankingcommon.domain.model.Client;
+import com.hdbank.bankingcommon.service.account.AccountQueryService;
 import com.hdbank.bankingcore.domain.dto.AccountRequest;
-import com.hdbank.bankingcore.domain.dto.ClientRequest;
 import com.hdbank.bankingcore.domain.dto.mapper.AccountMapper;
-import com.hdbank.bankingcore.domain.dto.mapper.ClientMapper;
-import com.hdbank.bankingcore.service.client.ClientCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,14 +15,18 @@ public class AccountServiceImpl implements AccountService{
 
     private final AccountCommandService commandService;
     private final AccountMapper mapper;
-
+    private final AccountQueryService queryService;
 
     @Override
     public void createAccount(AccountRequest newAccount) {
         Account account = mapper.toEntity(newAccount);
         commandService.save(account);
     }
-
+    @Override
+    public Account getById(final long id
+    ) {
+        return queryService.getById(id);
+    }
     @Override
     public Account findById(Long id) {
         return null;

@@ -1,6 +1,6 @@
 package com.hdbank.bankingeventhandler.config;
 
-import com.hdbank.bankingcommon.event.Event;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;

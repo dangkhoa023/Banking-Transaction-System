@@ -1,7 +1,6 @@
 create table account
 (
-    account_id bigint not null
-        primary key,
+    account_id bigint not nul primary key,
     balance    bigint,
     client_id  bigint
 );
@@ -11,8 +10,7 @@ alter table account
 
 create table client
 (
-    client_id          bigint not null
-        primary key,
+    client_id          bigint not null primary key,
     name               varchar(255),
     password           varchar(255),
     username           varchar(255),
@@ -28,8 +26,7 @@ alter table client
 
 create table transaction
 (
-    transaction_id  bigint not null
-        primary key,
+    transaction_id  bigint not null primary key,
     amount          bigint,
     created_at      timestamp(6),
     description     varchar(255),
@@ -47,3 +44,10 @@ create table transaction
 alter table transaction
     owner to postgres;
 
+CREATE TABLE bank_account
+(
+    bank_account_id   BIGINT NOT NULL PRIMARY KEY,
+    balance           DECIMAL(19, 2) NOT NULL
+);
+alter table bank_account
+    owner to postgres;

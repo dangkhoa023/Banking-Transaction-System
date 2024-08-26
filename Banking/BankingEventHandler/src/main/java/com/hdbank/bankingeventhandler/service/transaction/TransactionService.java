@@ -4,4 +4,5 @@ import com.hdbank.bankingcommon.domain.model.Transaction;
 
 public interface TransactionService {
     void createTransaction(Transaction transaction);
+    void transferMoney(Transaction transaction);
 }
