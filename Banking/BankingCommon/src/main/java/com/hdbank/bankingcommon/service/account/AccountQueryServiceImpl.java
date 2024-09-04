@@ -21,12 +21,14 @@ public class AccountQueryServiceImpl implements  AccountQueryService{
     }
 
     @Override
-    public Page<Account> findAll(Pageable pageable) {
+    public Page<Account> findAll(Pageable pageable)
+    {
         return null;
     }
 
     @Override
     public Account getById(long accountId){
+
         return repository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
     }

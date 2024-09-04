@@ -1,11 +1,11 @@
 package com.hdbank.bankingcore.controller;
 
 import com.hdbank.bankingcore.domain.dto.TransactionRequest;
-import com.hdbank.bankingcore.service.transaction.TransactionCommandService;
+
 import com.hdbank.bankingcore.service.transaction.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +25,5 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();
     }
-    @PostMapping("/transfer")
-    public ResponseEntity<Void> transferMoney(@RequestBody TransactionRequest transMoney) {
-            transactionService.transferMoney(transMoney);
-        return ResponseEntity.status(HttpStatus.OK)
-                .build();
-    }
+
 }

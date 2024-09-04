@@ -20,11 +20,7 @@ public class EventServiceImpl implements EventService {
         kafkaProducer.send(event);
     }
 
-    @Override
-    public void transferMoneyEvent(Transaction transfer) {
 
-
-    }
 
 
 }

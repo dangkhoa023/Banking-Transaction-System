@@ -23,7 +23,7 @@ public class ClientCreateEventHandler implements EventHandler {
                 ClientCreateEvent.class
         );
 
-        Client client = gson.fromJson(gson.toJson(event.getPayload()), Client.class);
+        Client client = gson.fromJson(gson.toJson(event.getPayload()), Client.class); // chuyen doi doi tuong tu json ve thanh account
 
         clientService.createClient(client);
 

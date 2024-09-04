@@ -17,6 +17,8 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
+
+    // đọc dữ liệu gửi đến
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> configProps = new HashMap<>();

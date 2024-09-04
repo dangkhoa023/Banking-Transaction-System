@@ -44,10 +44,3 @@ create table transaction
 alter table transaction
     owner to postgres;
 
-CREATE TABLE bank_account
-(
-    bank_account_id   BIGINT NOT NULL PRIMARY KEY,
-    balance           DECIMAL(19, 2) NOT NULL
-);
-alter table bank_account
-    owner to postgres;

@@ -21,10 +21,7 @@ public class AccountCreateEvenHandler implements EventHandler {
 
     @Override
     public void handle(JsonObject json) {
-        AccountCreateEvent event = gson.fromJson(
-                json,
-                AccountCreateEvent.class
-        );
+        AccountCreateEvent event = gson.fromJson(json, AccountCreateEvent.class);
 
         Account account = gson.fromJson(gson.toJson(event.getPayload()), Account.class);
 

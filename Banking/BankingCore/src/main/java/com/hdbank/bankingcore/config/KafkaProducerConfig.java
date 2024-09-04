@@ -22,21 +22,27 @@ public class KafkaProducerConfig {
     @Value("${kafka.topic.name}")
     private String topic;
 
+
+    // create topic , replica , partition
     @Bean
     public NewTopic createTopic() {
         return new NewTopic(topic, 3, (short) 1);
     }
 
+
+    //
     @Bean
     public ProducerFactory<String, Event> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class); // chuyen doi thanh string gui den kafka
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class); // chuyen doi bien thanh json gui den kafka ////
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
+
+    //send message
     @Bean
     public KafkaTemplate<String, Event> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());

@@ -21,15 +21,15 @@ public class Account {
 
     private Long balance;
 
-    @ManyToOne
-    @JoinColumn(name = "bank_account_id")
-    private BankAccount bankAccount;
-
-    @OneToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "account_id"),
-            inverseJoinColumns = @JoinColumn(name = "transaction_id")
-    )
-    private List<Transaction> transactions;
+//    @ManyToOne
+//    @JoinColumn(name = "bank_account_id")
+//    private BankAccount bankAccount;
+//
+//    @OneToMany
+//    @JoinTable(
+//            joinColumns = @JoinColumn(name = "account_id"),
+//            inverseJoinColumns = @JoinColumn(name = "transaction_id")
+//    )
+//    private List<Transaction> transactions;
 
 }
