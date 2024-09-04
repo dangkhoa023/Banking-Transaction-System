@@ -4,6 +4,7 @@ import com.hdbank.bankingcore.domain.dto.AccountRequest;
 import com.hdbank.bankingcore.domain.dto.AccountResponse;
 import com.hdbank.bankingcore.domain.dto.ClientRequest;
 import com.hdbank.bankingcore.service.account.AccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class AccountController {
 
 
     @PostMapping
-    public ResponseEntity<Void> createClient(@RequestBody AccountRequest newAccount) {
+    public ResponseEntity<Void> createClient(@Valid @RequestBody AccountRequest newAccount) {
     accountService.createAccount(newAccount);
     return ResponseEntity.status(HttpStatus.CREATED)
             .build();

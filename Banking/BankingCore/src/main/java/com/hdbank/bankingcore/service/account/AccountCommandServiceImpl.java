@@ -19,5 +19,4 @@ public class AccountCommandServiceImpl implements AccountCommandService {
         eventService.create(event);
     }
 
-
 }

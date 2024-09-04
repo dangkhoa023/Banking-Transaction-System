@@ -1,5 +1,6 @@
 package com.hdbank.bankingcore.service.client;
 
+import com.hdbank.bankingcommon.domain.exception.ResourceNotFoundException;
 import com.hdbank.bankingcommon.domain.model.Client;
 import com.hdbank.bankingcommon.service.client.ClientQueryService;
 import com.hdbank.bankingcore.domain.dto.ClientRequest;
@@ -22,8 +23,26 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void createClient(ClientRequest newClient) {
-        Client client = mapper.toEntity(newClient);
-        commandService.save(client);
+        try {
+
+            if (newClient.username() == null || newClient.username().isEmpty()) {
+                throw new ResourceNotFoundException("Username cannot be null or empty.");
+            }
+
+            if (newClient.password() == null || newClient.password().isEmpty()) {
+                throw new ResourceNotFoundException("Password cannot be null or empty.");
+            }
+
+            if (newClient.name() == null || newClient.name().isEmpty()) {
+                throw new ResourceNotFoundException("Name cannot be null or empty.");
+            }
+
+            Client client = mapper.toEntity(newClient);
+            commandService.save(client);
+
+        } catch (ResourceNotFoundException exception) {
+            throw exception;
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.hdbank.bankingcore.service.account;
 
+import com.hdbank.bankingcommon.domain.exception.ResourceNotFoundException;
 import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.service.account.AccountQueryService;
 import com.hdbank.bankingcore.domain.dto.AccountRequest;
@@ -19,8 +20,20 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void createAccount(AccountRequest newAccount) {
-        Account account = mapper.toEntity(newAccount);
-        commandService.save(account);
+
+        try {
+            if (newAccount.balance() < 0) {
+                throw new ResourceNotFoundException("Balance cannot be negative.");
+            }
+            if (newAccount.clientId() <= 0) {
+                throw new ResourceNotFoundException("Client ID cannot be null.");
+            }
+            Account account = mapper.toEntity(newAccount);
+            commandService.save(account);
+
+        } catch (ResourceNotFoundException exception) {
+            throw exception;
+        }
     }
     @Override
     public Account getById(final long id
