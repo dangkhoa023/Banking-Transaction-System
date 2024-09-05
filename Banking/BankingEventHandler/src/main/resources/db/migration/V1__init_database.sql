@@ -1,6 +1,6 @@
 create table account
 (
-    account_id bigint not nul primary key,
+    account_id bigint not null primary key,
     balance    bigint,
     client_id  bigint
 );
