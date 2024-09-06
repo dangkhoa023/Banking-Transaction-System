@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class AccountMapper {
     public Account toEntity(AccountRequest request) {
         return Account.builder()
-                .clientId(request.clientId())
                 .balance(request.balance())
                 .build();
     }

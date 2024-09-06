@@ -1,47 +1,51 @@
 package com.hdbank.bankingcore.service.client;
 
 import com.hdbank.bankingcommon.domain.exception.ResourceNotFoundException;
+import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.domain.model.Client;
-import com.hdbank.bankingcommon.service.client.ClientQueryService;
 import com.hdbank.bankingcore.domain.dto.ClientRequest;
+import com.hdbank.bankingcore.domain.dto.mapper.AccountMapper;
 import com.hdbank.bankingcore.domain.dto.mapper.ClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
     private final ClientCommandService commandService;
-//    private final ClientQueryService queryService;
+    private final AccountMapper accountMapper;
 
-    private final ClientMapper mapper;
+    private final ClientMapper clientMapper;
 
+    @Transactional
     @Override
-    public void createClient(ClientRequest newClient) {
+    public void createClientWithAccount(ClientRequest clientRequest) {
         try {
-
-            if (newClient.username() == null || newClient.username().isEmpty()) {
+            if (clientRequest.username() == null || clientRequest.username().isEmpty()) {
                 throw new ResourceNotFoundException("Username cannot be null or empty.");
             }
-
-            if (newClient.password() == null || newClient.password().isEmpty()) {
+            if (clientRequest.password() == null || clientRequest.password().isEmpty()) {
                 throw new ResourceNotFoundException("Password cannot be null or empty.");
             }
-
-            if (newClient.name() == null || newClient.name().isEmpty()) {
+            if (clientRequest.name() == null || clientRequest.name().isEmpty()) {
                 throw new ResourceNotFoundException("Name cannot be null or empty.");
             }
 
-            Client client = mapper.toEntity(newClient);
+            // Convert AccountRequest to Account entity
+            Account account = accountMapper.toEntity(clientRequest.account());
+
+            // Convert ClientRequest to Client entity
+            Client client = clientMapper.toEntity(clientRequest, account);
+
+            // Save Client and Account
             commandService.save(client);
 
-        } catch (ResourceNotFoundException exception) {
-            throw exception;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed ", e);
         }
     }
 

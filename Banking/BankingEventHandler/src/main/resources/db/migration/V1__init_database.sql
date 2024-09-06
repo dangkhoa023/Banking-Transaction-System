@@ -1,24 +1,33 @@
-create table account
+create table events
 (
-    account_id bigint not null primary key,
-    balance    bigint,
-    client_id  bigint
+    dtype      varchar(31) not null,
+    event_id   bigint      not null
+        primary key,
+    event_type varchar(255)
+        constraint events_event_type_check
+            check ((event_type)::text = ANY
+                   ((ARRAY ['TRANSACTION_CREATE'::character varying, 'CLIENT_CREATE'::character varying, 'ACCOUNT_CREATE'::character varying])::text[])),
+    payload    jsonb,
+    timestamp  timestamp(6)
+);
+
+alter table events owner to postgres;
+
+CREATE TABLE account (
+                          account_id BIGSERIAL PRIMARY KEY,
+                          balance BIGINT NOT NULL
 );
 
 alter table account
     owner to postgres;
 
-create table client
-(
-    client_id          bigint not null primary key,
-    name               varchar(255),
-    password           varchar(255),
-    username           varchar(255),
-    account_account_id bigint
-        constraint ukjcf7qcgf4stg1kww2u2rwihji
-            unique
-        constraint fk91weic00shpbsfrkhwqrqxk0y
-            references account
+CREATE TABLE client (
+                        client_id BIGSERIAL PRIMARY KEY,
+                        username VARCHAR(255) NOT NULL,
+                        password VARCHAR(255) NOT NULL,
+                        name VARCHAR(255) NOT NULL,
+                        account_id BIGINT,
+                        FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
 
 alter table client

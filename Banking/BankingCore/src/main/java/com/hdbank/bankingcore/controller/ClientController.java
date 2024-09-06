@@ -17,7 +17,7 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<Void> createClient(@Valid @RequestBody ClientRequest newClient) {
-        clientService.createClient(newClient);
+        clientService.createClientWithAccount(newClient);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();
     }
