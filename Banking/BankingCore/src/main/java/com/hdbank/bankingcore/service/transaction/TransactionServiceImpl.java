@@ -1,5 +1,6 @@
 package com.hdbank.bankingcore.service.transaction;
 
+import com.hdbank.bankingcommon.domain.exception.ResourceNotFoundException;
 import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.domain.model.Transaction;
 import com.hdbank.bankingcommon.domain.model.TransactionStatus;
@@ -57,7 +58,7 @@ public class TransactionServiceImpl implements  TransactionService {
 
         // Kiểm tra số dư tài khoản gửi
         if (fromAccount.getBalance() < request.amount()) {
-            throw new RuntimeException("Insufficient balance in the sender's account.");
+            throw new ResourceNotFoundException("Insufficient balance in the sender's account.");
         }
 
         // Cập nhật số dư tài khoản gửi và nhận

@@ -2,6 +2,7 @@ package com.hdbank.bankingcore.domain.dto.mapper;
 
 
 import com.hdbank.bankingcommon.domain.model.Transaction;
+import com.hdbank.bankingcommon.domain.model.TransactionStatus;
 import com.hdbank.bankingcore.domain.dto.TransactionRequest;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ public class TransactionMapper {
                 .fromAccountId(request.fromAccountId())
                 .amount(request.amount())
                 .toAccountId(request.fromAccountId())
+
                 .build();
     }
 }
