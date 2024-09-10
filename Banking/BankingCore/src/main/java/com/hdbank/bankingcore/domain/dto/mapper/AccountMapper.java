@@ -2,6 +2,7 @@ package com.hdbank.bankingcore.domain.dto.mapper;
 
 import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcore.domain.dto.AccountRequest;
+import com.hdbank.bankingcore.domain.dto.AccountResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,5 +11,6 @@ public class AccountMapper {
         return Account.builder()
                 .balance(request.balance())
                 .build();
+
     }
 }

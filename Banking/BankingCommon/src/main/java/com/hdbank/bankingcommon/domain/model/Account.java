@@ -1,5 +1,6 @@
 package com.hdbank.bankingcommon.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,8 +21,6 @@ public class Account {
     private Long balance;
 
     @OneToOne(mappedBy = "account")
+    @JsonIgnore
     private Client client;
-
-
-
 }

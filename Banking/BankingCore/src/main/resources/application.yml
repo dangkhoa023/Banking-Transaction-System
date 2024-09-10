@@ -8,16 +8,16 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-  flyway:
-    baseline-on-migrate: true
-    enabled: true
-    baseline-description: "init"
-    baseline-version: 0
-#    locations: classpath:db/migration
+#  flyway:
+#    baseline-on-migrate: true
+#    enabled: true
+#    baseline-description: "init"
+#    baseline-version: 0
+##    locations: classpath:db/migration
 kafka:
   topic:
     name: banking

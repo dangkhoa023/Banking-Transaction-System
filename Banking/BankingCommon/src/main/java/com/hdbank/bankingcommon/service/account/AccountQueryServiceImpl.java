@@ -32,4 +32,9 @@ public class AccountQueryServiceImpl implements  AccountQueryService{
         return repository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
     }
+    @Override
+    public Account findAccountById(Long accountId) {
+        return repository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account with ID " + accountId + " not found."));
+    }
 }

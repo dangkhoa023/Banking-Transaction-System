@@ -25,7 +25,8 @@ public class AccountCreateEvenHandler implements EventHandler {
 
         Account account = gson.fromJson(gson.toJson(event.getPayload()), Account.class);
 
-        accountService.createAccount(account);
+        accountService.updateBalance(account);
 
     }
+
 }

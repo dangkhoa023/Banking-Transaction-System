@@ -12,9 +12,15 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
-    @Override
+//    @Override
+//    @Transactional
+//    public void createAccount(Account account) {
+//        accountRepository.save(account);
+//    }
+
     @Transactional
-    public void createAccount(Account account) {
+    @Override
+    public void updateBalance(Account account){
         accountRepository.save(account);
     }
 }

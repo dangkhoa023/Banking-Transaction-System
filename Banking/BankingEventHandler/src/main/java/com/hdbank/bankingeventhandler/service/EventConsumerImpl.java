@@ -25,8 +25,7 @@ public class EventConsumerImpl implements EventConsumer {
 
         try {
             log.info("Received message: {}", payload);
-            JsonObject json = JsonParser.parseString(payload)
-                    .getAsJsonObject();
+            JsonObject json = JsonParser.parseString(payload).getAsJsonObject();
             String type = json.get("eventType")
                     .getAsString();
             log.info("Type: {}", type);
@@ -37,6 +36,6 @@ public class EventConsumerImpl implements EventConsumer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 }
