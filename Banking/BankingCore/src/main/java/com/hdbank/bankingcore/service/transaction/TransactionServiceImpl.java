@@ -52,8 +52,8 @@ public class TransactionServiceImpl implements  TransactionService {
     @Override
     public void transferMoney(TransactionRequest request) {
         // Lấy thông tin tài khoản gửi và nhận qua AccountQueryService
-        Account fromAccount = accountQueryService.findAccountById(request.fromAccountId().getAccountId());
-        Account toAccount = accountQueryService.findAccountById(request.toAccountId().getAccountId());
+        Account fromAccount = accountQueryService.findAccountById(request.fromAccountId());
+        Account toAccount = accountQueryService.findAccountById(request.toAccountId());
 
         // Kiểm tra số dư tài khoản gửi
         if (fromAccount.getBalance() < request.amount()) {
@@ -70,7 +70,7 @@ public class TransactionServiceImpl implements  TransactionService {
 
         // Tạo và lưu transaction
         Transaction transaction = mapper.toEntity(request);
-        transaction.setStatus(TransactionStatus.SUCCESS);
+        //transaction.setStatus(TransactionStatus.SUCCESS);
         transaction.setCreatedAt(LocalDateTime.now());
 
 
