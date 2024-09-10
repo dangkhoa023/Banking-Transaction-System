@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
 public class TransactionMapper {
     public Transaction toEntity(TransactionRequest request) {
         return Transaction.builder()
-                .amount(request.amount())
+
                 .description(request.description())
                 .fromAccountId(request.fromAccountId())
+                .amount(request.amount())
                 .toAccountId(request.fromAccountId())
                 .build();
     }

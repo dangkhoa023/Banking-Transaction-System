@@ -4,9 +4,9 @@ import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.domain.model.TransactionStatus;
 
 public record TransactionRequest
-        (Long amount,
+        (Account fromAccountId,
         Account toAccountId,
-        Account fromAccountId,
+        Long amount,
         String description)
 {
 }

@@ -1,6 +1,8 @@
 package com.hdbank.bankingcommon.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +23,9 @@ public class Account {
     private Long balance;
 
     @OneToOne(mappedBy = "account")
-    @JsonIgnore
+    @JsonIgnore // ngắn cho client không tạo json
     private Client client;
+
+
+
 }

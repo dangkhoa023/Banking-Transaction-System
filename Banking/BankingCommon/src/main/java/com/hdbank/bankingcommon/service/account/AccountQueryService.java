@@ -8,5 +8,7 @@ public interface AccountQueryService extends QueryService<Account> {
 
     Account getById(long id);
 
+   // Account findAccountById(Account accountId);
+
     Account findAccountById(Long accountId);
 }

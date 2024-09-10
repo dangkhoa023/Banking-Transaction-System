@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AccountQueryServiceImpl implements  AccountQueryService{
+public class AccountQueryServiceImpl implements  AccountQueryService {
 
-    private  final AccountRepository repository;
+    private final AccountRepository repository;
 
 
     @Override
@@ -21,17 +21,17 @@ public class AccountQueryServiceImpl implements  AccountQueryService{
     }
 
     @Override
-    public Page<Account> findAll(Pageable pageable)
-    {
+    public Page<Account> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public Account getById(long accountId){
+    public Account getById(long accountId) {
 
         return repository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
     }
+
     @Override
     public Account findAccountById(Long accountId) {
         return repository.findById(accountId)

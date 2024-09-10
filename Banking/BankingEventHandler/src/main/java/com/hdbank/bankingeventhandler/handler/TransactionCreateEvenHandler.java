@@ -29,7 +29,7 @@ public class TransactionCreateEvenHandler implements EventHandler {
 
         Transaction transaction = gson.fromJson(gson.toJson(event.getPayload()), Transaction.class);
 
-        transactionService.createTransaction(transaction);
+        transactionService.transferMoney(transaction);
     }
 
 }

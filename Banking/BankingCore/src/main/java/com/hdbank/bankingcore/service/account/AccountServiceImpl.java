@@ -42,13 +42,10 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public void updateBalance(UpdateBalanceRequest updateBalance) {
         // Sử dụng query service để lấy account thay vì repository
-        Account account = queryService.findAccountById(updateBalance.accountId());
-
+        Account account = queryService.getById(updateBalance.accountId());
 
         // Cập nhật số dư tài khoản
         long newBalance = account.getBalance() + updateBalance.amount();
-
-
 
         // Cập nhật lại số dư
         account.setBalance(newBalance);

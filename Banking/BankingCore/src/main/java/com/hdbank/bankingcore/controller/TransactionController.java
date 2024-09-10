@@ -19,11 +19,17 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @PostMapping
-    public ResponseEntity<Void> createTransaction(@RequestBody TransactionRequest newTransaction){
-        transactionService.createTransaction(newTransaction);
+//    @PostMapping
+//    public ResponseEntity<Void> createTransaction(@RequestBody TransactionRequest newTransaction){
+//        transactionService.createTransaction(newTransaction);
+//        return ResponseEntity.status(HttpStatus.CREATED)
+//                .build();
+//    }
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transferMoney(@RequestBody TransactionRequest request) {
+    transactionService.transferMoney(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .build();
-    }
+               .build();
+}
 
 }
