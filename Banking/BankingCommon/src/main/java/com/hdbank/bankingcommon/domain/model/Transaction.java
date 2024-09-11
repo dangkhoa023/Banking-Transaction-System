@@ -29,7 +29,7 @@ public class Transaction {
     private String description;
 
 
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
     private LocalDateTime createdAt;

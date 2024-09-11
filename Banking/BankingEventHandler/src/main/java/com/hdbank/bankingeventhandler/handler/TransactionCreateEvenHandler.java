@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.domain.model.Transaction;
+import com.hdbank.bankingcommon.domain.model.TransactionStatus;
 import com.hdbank.bankingcommon.event.TransactionCreateEvent;
 import com.hdbank.bankingeventhandler.service.transaction.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class TransactionCreateEvenHandler implements EventHandler {
         );
 
         Transaction transaction = gson.fromJson(gson.toJson(event.getPayload()), Transaction.class);
-
+        transaction.setStatus(TransactionStatus.valueOf(transaction.getStatus().name())); // back enum ve dung kieu
         transactionService.transferMoney(transaction);
     }
 

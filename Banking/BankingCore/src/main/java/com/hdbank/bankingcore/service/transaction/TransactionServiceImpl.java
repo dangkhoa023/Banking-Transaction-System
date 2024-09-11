@@ -70,12 +70,22 @@ public class TransactionServiceImpl implements  TransactionService {
         accountRepository.save(toAccount);
 
         // Tạo và lưu transaction
-        Transaction transaction = mapper.toEntity(request);
-        //transaction.setStatus(TransactionStatus.SUCCESS);
+        //Transaction transaction = mapper.toEntity(request);
+        Transaction transaction = new Transaction();
+        transaction.setFromAccountId(request.fromAccountId()); // Set from account ID
+        transaction.setToAccountId(request.toAccountId()); // Set to account ID
+        transaction.setAmount(request.amount());
+        transaction.setDescription(request.description());
+
+        transaction.setStatus(TransactionStatus.SUCCESS);
         transaction.setCreatedAt(LocalDateTime.now());
 
 
         commandService.save(transaction);
+
+//        transaction.setStatus(TransactionStatus.SUCCESS);
+//
+//        commandService.save(transaction);
     }
 
 

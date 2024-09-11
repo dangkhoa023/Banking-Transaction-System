@@ -3,6 +3,7 @@ package com.hdbank.bankingcore.controller;
 import com.hdbank.bankingcore.domain.dto.TransactionRequest;
 
 import com.hdbank.bankingcore.service.transaction.TransactionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
@@ -26,7 +27,7 @@ public class TransactionController {
 //                .build();
 //    }
     @PostMapping("/transfer")
-    public ResponseEntity<String> transferMoney(@RequestBody TransactionRequest request) {
+    public ResponseEntity<String> transferMoney(@Valid @RequestBody TransactionRequest request) {
     transactionService.transferMoney(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                .build();
