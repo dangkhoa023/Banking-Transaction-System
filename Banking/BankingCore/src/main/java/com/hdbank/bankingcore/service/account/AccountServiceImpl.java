@@ -1,5 +1,6 @@
 package com.hdbank.bankingcore.service.account;
 
+import com.hdbank.bankingcommon.domain.exception.ResourceNotFoundException;
 import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.repository.AccountRepository;
 import com.hdbank.bankingcommon.service.account.AccountQueryService;
@@ -41,14 +42,21 @@ public class AccountServiceImpl implements AccountService{
     @Transactional
     @Override
     public void updateBalance(UpdateBalanceRequest updateBalance) {
-        // Sử dụng query service để lấy account thay vì repository
+
         Account account = queryService.getById(updateBalance.accountId());
 
+        if (account == null) {
+            throw new ResourceNotFoundException("Account with ID not found.");
+        }
         // Cập nhật số dư tài khoản
         long newBalance = account.getBalance() + updateBalance.amount();
 
         // Cập nhật lại số dư
         account.setBalance(newBalance);
+
+        if (newBalance < 0) {
+            throw new ResourceNotFoundException(" Balance cannot go below zero.");
+        }
 
         // Lưu lại account đã cập nhật
         commandService.save(account);
