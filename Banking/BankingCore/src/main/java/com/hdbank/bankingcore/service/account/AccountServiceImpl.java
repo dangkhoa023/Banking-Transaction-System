@@ -57,7 +57,6 @@ public class AccountServiceImpl implements AccountService{
         if (newBalance < 0) {
             throw new ResourceNotFoundException(" Balance cannot go below zero.");
         }
-
         // Lưu lại account đã cập nhật
         commandService.save(account);
     }

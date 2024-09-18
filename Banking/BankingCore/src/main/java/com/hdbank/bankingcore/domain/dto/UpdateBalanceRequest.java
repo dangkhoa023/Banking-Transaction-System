@@ -8,6 +8,6 @@ import lombok.Setter;
 
 public record UpdateBalanceRequest(
         long accountId,  // ID của tài khoản cần cập nhật
-        long amount// Số tiền cần cộng thêm vào tài khoản (nếu là giá trị âm thì trừ tiền)
+        long amount// Số tiền
 ) {}
 

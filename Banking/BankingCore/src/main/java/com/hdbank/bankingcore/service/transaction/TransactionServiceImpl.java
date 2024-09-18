@@ -51,37 +51,43 @@ public class TransactionServiceImpl implements  TransactionService {
 
     @Transactional
     @Override
-    public void transferMoney(TransactionRequest request) {
-        // Lấy thông tin tài khoản gửi và nhận qua AccountQueryService
-        Account fromAccount = accountQueryService.findAccountById(request.fromAccountId());
-        Account toAccount = accountQueryService.findAccountById(request.toAccountId());
+    public synchronized void transferMoney(TransactionRequest request) {  // synchronized tranh race condition
 
-        // Kiểm tra số dư tài khoản gửi
-        if (fromAccount.getBalance() < request.amount()) {
-            throw new ResourceNotFoundException("Insufficient balance in the sender's account.");
-        }
-
-        // Cập nhật số dư tài khoản gửi và nhận
-        fromAccount.setBalance(fromAccount.getBalance() - request.amount());
-        toAccount.setBalance(toAccount.getBalance() + request.amount());
-
-        // Lưu thay đổi vào database
-        accountRepository.save(fromAccount);
-        accountRepository.save(toAccount);
-
-        // Tạo và lưu transaction
-       // Transaction transaction = mapper.toEntity(request);
         Transaction transaction = new Transaction();
-        transaction.setFromAccountId(request.fromAccountId()); // Set from account ID
-        transaction.setToAccountId(request.toAccountId()); // Set to account ID
+        transaction.setFromAccountId(request.fromAccountId());
+        transaction.setToAccountId(request.toAccountId());
         transaction.setAmount(request.amount());
         transaction.setDescription(request.description());
-
-        transaction.setStatus(TransactionStatus.SUCCESS);
         transaction.setCreatedAt(LocalDateTime.now());
 
+        try {
+            // Lấy thông tin tài khoản gửi và nhận qua AccountQueryService
+            Account fromAccount = accountQueryService.findAccountById(request.fromAccountId());
+            Account toAccount = accountQueryService.findAccountById(request.toAccountId());
 
-        commandService.save(transaction);
+            // Kiểm tra số dư tài khoản gửi
+            if (fromAccount.getBalance() < request.amount()) {
+                throw new ResourceNotFoundException("Insufficient balance in the sender's account.");
+            }
 
+            // Cập nhật số dư tài khoản gửi và nhận
+            fromAccount.setBalance(fromAccount.getBalance() - request.amount());
+            toAccount.setBalance(toAccount.getBalance() + request.amount());
+
+            // Lưu thay đổi vào database
+            accountRepository.save(fromAccount);
+            accountRepository.save(toAccount);
+
+            //  transaction status to SUCCESS
+            transaction.setStatus(TransactionStatus.SUCCESS);
+
+        } catch (Exception e) {
+            transaction.setStatus(TransactionStatus.FAILED);
+            transaction.setDescription(e.getMessage());
+            throw new ResourceNotFoundException("Transaction failed: " + e.getMessage());
+
+        } finally {
+            commandService.save(transaction);
+        }
     }
 }

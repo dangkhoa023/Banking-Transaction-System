@@ -32,5 +32,4 @@ public class TransactionCreateEvenHandler implements EventHandler {
         transaction.setStatus(TransactionStatus.valueOf(transaction.getStatus().name())); // back enum ve dung kieu
         transactionService.transferMoney(transaction);
     }
-
 }
