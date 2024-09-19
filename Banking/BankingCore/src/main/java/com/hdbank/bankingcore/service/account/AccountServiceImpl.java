@@ -5,6 +5,7 @@ import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.repository.AccountRepository;
 import com.hdbank.bankingcommon.service.account.AccountQueryService;
 import com.hdbank.bankingcore.domain.dto.UpdateBalanceRequest;
+import com.hdbank.bankingcore.domain.dto.UpdateBalanceResponse;
 import com.hdbank.bankingcore.domain.dto.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,7 +42,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Transactional
     @Override
-    public void updateBalance(UpdateBalanceRequest updateBalance) {
+    public UpdateBalanceResponse updateBalance(UpdateBalanceRequest updateBalance) {
 
         Account account = queryService.getById(updateBalance.accountId());
 
@@ -59,6 +60,7 @@ public class AccountServiceImpl implements AccountService{
         }
         // Lưu lại account đã cập nhật
         commandService.save(account);
+         return new UpdateBalanceResponse(account.getAccountId(), newBalance);
     }
 
     @Override

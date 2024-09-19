@@ -6,10 +6,9 @@ import com.hdbank.bankingcommon.domain.model.Transaction;
 import com.hdbank.bankingcommon.domain.model.TransactionStatus;
 import com.hdbank.bankingcommon.repository.AccountRepository;
 import com.hdbank.bankingcommon.service.account.AccountQueryService;
-import com.hdbank.bankingcommon.service.transaction.TransactionQueryService;
 import com.hdbank.bankingcore.domain.dto.TransactionRequest;
+import com.hdbank.bankingcore.domain.dto.TransactionResponse;
 import com.hdbank.bankingcore.domain.dto.mapper.TransactionMapper;
-import com.hdbank.bankingcore.service.account.AccountService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -51,7 +50,7 @@ public class TransactionServiceImpl implements  TransactionService {
 
     @Transactional
     @Override
-    public synchronized void transferMoney(TransactionRequest request) {  // synchronized tranh race condition
+    public synchronized TransactionResponse transferMoney(TransactionRequest request) {  // synchronized tranh race condition
 
         Transaction transaction = new Transaction();
         transaction.setFromAccountId(request.fromAccountId());
@@ -71,8 +70,11 @@ public class TransactionServiceImpl implements  TransactionService {
             }
 
             // Cập nhật số dư tài khoản gửi và nhận
-            fromAccount.setBalance(fromAccount.getBalance() - request.amount());
-            toAccount.setBalance(toAccount.getBalance() + request.amount());
+            long newFromAccountBalance = fromAccount.getBalance() - request.amount();
+            long newToAccountBalance = toAccount.getBalance() + request.amount();
+
+            fromAccount.setBalance(newFromAccountBalance);
+            toAccount.setBalance(newToAccountBalance);
 
             // Lưu thay đổi vào database
             accountRepository.save(fromAccount);
@@ -81,6 +83,15 @@ public class TransactionServiceImpl implements  TransactionService {
             //  transaction status to SUCCESS
             transaction.setStatus(TransactionStatus.SUCCESS);
 
+
+            return new TransactionResponse(
+                    fromAccount.getAccountId(),
+                    newFromAccountBalance,
+                    toAccount.getAccountId(),
+                    newToAccountBalance,
+                    "SUCCESS",
+                    "Transaction completed successfully."
+            );
         } catch (Exception e) {
             transaction.setStatus(TransactionStatus.FAILED);
             transaction.setDescription(e.getMessage());

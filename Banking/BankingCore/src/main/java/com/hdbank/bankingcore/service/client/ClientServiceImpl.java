@@ -3,7 +3,9 @@ package com.hdbank.bankingcore.service.client;
 import com.hdbank.bankingcommon.domain.exception.ResourceNotFoundException;
 import com.hdbank.bankingcommon.domain.model.Account;
 import com.hdbank.bankingcommon.domain.model.Client;
+import com.hdbank.bankingcore.domain.dto.AccountResponse;
 import com.hdbank.bankingcore.domain.dto.ClientRequest;
+import com.hdbank.bankingcore.domain.dto.ClientResponse;
 import com.hdbank.bankingcore.domain.dto.mapper.AccountMapper;
 import com.hdbank.bankingcore.domain.dto.mapper.ClientMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Transactional
     @Override
-    public void createClientWithAccount(ClientRequest clientRequest) {
+    public ClientResponse createClientWithAccount(ClientRequest clientRequest) {
         try {
             if (clientRequest.username() == null || clientRequest.username().isEmpty()) {
                 throw new ResourceNotFoundException("Username cannot be null or empty.");
@@ -43,6 +45,9 @@ public class ClientServiceImpl implements ClientService {
 
             // Save Client and Account
             commandService.save(client);
+
+            AccountResponse accountResponse = new AccountResponse(account.getBalance());
+            return new ClientResponse(client.getUsername(), client.getName(), accountResponse);
 
         } catch (Exception e) {
             throw new RuntimeException("Failed ", e);
