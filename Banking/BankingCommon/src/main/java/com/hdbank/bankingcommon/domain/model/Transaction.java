@@ -16,12 +16,8 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long transactionId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "from_account_id")
     private Long fromAccountId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "to_account_id")
     private Long toAccountId;
 
     private Long amount;

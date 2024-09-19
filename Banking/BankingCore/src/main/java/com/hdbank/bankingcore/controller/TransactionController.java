@@ -21,12 +21,7 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-//    @PostMapping
-//    public ResponseEntity<Void> createTransaction(@RequestBody TransactionRequest newTransaction){
-//        transactionService.createTransaction(newTransaction);
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .build();
-//    }
+
     @PostMapping("/transfer")
     public ResponseEntity<TransactionResponse> transferMoney(@Valid @RequestBody TransactionRequest request) {
     TransactionResponse transactionResponse= transactionService.transferMoney(request);

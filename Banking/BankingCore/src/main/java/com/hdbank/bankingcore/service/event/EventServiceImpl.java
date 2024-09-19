@@ -19,8 +19,4 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(event);
         kafkaProducer.send(event);
     }
-
-
-
-
 }
