@@ -9,6 +9,7 @@ import com.hdbank.bankingcommon.event.ClientCreateEvent;
 import com.hdbank.bankingeventhandler.service.account.AccountService;
 import com.hdbank.bankingeventhandler.service.client.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 
@@ -18,6 +19,7 @@ public class AccountCreateEvenHandler implements EventHandler {
 
     private final AccountService accountService;
     private final Gson gson;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public void handle(JsonObject json) {
@@ -27,6 +29,8 @@ public class AccountCreateEvenHandler implements EventHandler {
 
         accountService.updateBalance(account);
 
+        String successMessage = "UPDATE BALANCE " + account.getAccountId() + " succeeded.";
+        kafkaTemplate.send("UPDATE_SUCCESS", successMessage);
     }
 
 }

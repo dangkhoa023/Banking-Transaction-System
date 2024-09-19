@@ -39,13 +39,18 @@ public class EventConsumerImpl implements EventConsumer {
     }
 
     @KafkaListener(topics = "TRANSACTION_SUCCESS")
-    public void handleSuccess(String message) {
+    public void handleTransaction(String message) {
         System.out.println( "Message: "+ message);
 
     }
 
-    @KafkaListener(topics = "TRANSACTION_FAILED")
-    public void handleFailure(String message) {
+    @KafkaListener(topics = "UPDATE_SUCCESS")
+    public void handleUpdate(String message) {
+        System.out.println( "Message: "+ message);
+
+    }
+    @KafkaListener(topics = "CREATE_SUCCESS")
+    public void handleCreate(String message) {
         System.out.println( "Message: "+ message);
 
     }

@@ -6,6 +6,7 @@ import com.hdbank.bankingcommon.domain.model.Client;
 import com.hdbank.bankingcommon.event.ClientCreateEvent;
 import com.hdbank.bankingeventhandler.service.client.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service("CLIENT_CREATE")
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class ClientCreateEventHandler implements EventHandler {
 
     private final ClientService clientService;
-
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private final Gson gson;
 
     @Override
@@ -27,5 +28,7 @@ public class ClientCreateEventHandler implements EventHandler {
 
         clientService.createClient(client);
 
+        String successMessage = "CREATE CLIENT " + client.getClientId() + " succeeded.";
+        kafkaTemplate.send("CREATE_SUCCESS", successMessage);
     }
 }

@@ -21,3 +21,4 @@ spring:
 kafka:
   topic:
     name: banking
+
