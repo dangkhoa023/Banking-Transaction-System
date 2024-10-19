@@ -19,9 +19,6 @@ public class AccountController {
 
    private final AccountService accountService;
 
-
-
-
     @PostMapping("/update-balance")
     public ResponseEntity<UpdateBalanceResponse> updateBalance(@Valid @RequestBody UpdateBalanceRequest request) {
         UpdateBalanceResponse updateBalanceResponse = accountService.updateBalance(request);
