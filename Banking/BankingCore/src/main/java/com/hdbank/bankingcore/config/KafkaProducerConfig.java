@@ -18,7 +18,7 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-    // Class cấu hình kết nối Kafka
+    // Class cấu hình kết nối Kafka //
     @Value("${kafka.topic.name}")
     private String topic;
 
